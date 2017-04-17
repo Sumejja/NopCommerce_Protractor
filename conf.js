@@ -1,69 +1,79 @@
-// An example configuration file.
+var HtmlReporter = require('protractor-jasmine2-screenshot-reporter');
+
 exports.config = {
 
-    // Capabilities to be passed to the webdriver instance.
-    /*capabilities: {
-     'browserName': 'chrome',
-     'proxy': {
-     'proxyType': 'manual',
-     'httpProxy': 'http://localhost:8888'
-     }
-     /!* "runtimeArgs": [
-     "--disable-session-crashed-bubble",
-     "--disable-infobars"
-     ],
-     'chromeOptions': {
-     'args': ['no-sandbox']
-     }*!/
-     },*/
     multiCapabilities: [
+        {
+            browserName: 'MicrosoftEdge',
+            specs: ['./tests/jewelry-test.js',],
+            params: 'desktop version'
+        },
+        {
+            browserName: 'firefox',
+            specs: ['./tests/jewelry-test.js',],
+            params: 'desktop version'
+        },
+        {
+            browserName: 'chrome',
+            specs: ['./tests/jewelry-test.js',],
+            params: 'desktop version',
+        },
+        {
+            browserName: 'chrome',
+            specs: ['./tests/jewelry-test.js',],
+            params: 'tablet version',
+        },
         {
             browserName: 'chrome',
             chromeOptions: {mobileEmulation: {deviceName: 'Google Nexus 5'}},
-            specs: ['./tests/*',],
+            specs: ['./tests/jewelry-test.js',],
             params: 'mobile version'
         },
-        {
-            browserName: 'chrome',
-            specs: ['./tests/*',],
-            params: 'defaultWindowSize',
-        },
-        {
-            browserName: 'chrome',
-            specs: ['./tests/*',],
-            params: 'smallDesktopSize',
-        },
     ],
-    // Framework to use. Jasmine is recommended.
+
     framework: 'jasmine',
 
     onPrepare: function () {
+
+        //protractor-jasmine2-screenshot-reporter
+        jasmine.getEnv().addReporter(
+            new HtmlReporter({
+                ignoreSkippedSpecs: true,
+                dest: '_REPORT_',
+                filename: 'results.html'
+            })
+        );
+
         browser.ignoreSynchronization = true;
         var D                      = require('./data-provider/configuration-data.js');
 
         // returning the promise makes protractor wait for the reporter config before executing tests
         return global.browser.getProcessedConfig().then(function (config) {
             var chromeOptions = config.capabilities.chromeOptions;
+            var browserName = config.capabilities.browserName;
             var parameter = config.capabilities.params;
+
+            D.selectedBrowser = browserName.toUpperCase();
+            if (D.selectedBrowser === 'MICROSOFTEDGE') D.selectedBrowser = 'EDGE';
 
             function setConfigurationForMobile() {
                 if (parameter === 'mobile version') {
-                    browser.driver.manage().window().setSize(D.selectedWindowSize.mobileSize.width, D.selectedWindowSize.mobileSize.height);
+                    browser.driver.manage().window().setSize(D.screenResolution.mobileSize.width, D.screenResolution.mobileSize.height);
                     D.selectedVersion = D.versions.mobile;
                 }
             }
 
             function setConfigurationForDesktop() {
-                if (parameter === 'bigDesktopSize') {
-                    browser.driver.manage().window().setSize(D.selectedWindowSize.bigDesktopSize.width, D.selectedWindowSize.bigDesktopSize.height);
-                    D.selectedVersion = D.versions.desktop_big;
+                if (parameter === 'desktop version') {
+                    browser.driver.manage().window().setSize(D.screenResolution.desktopSize.width, D.screenResolution.desktopSize.height);
+                    D.selectedVersion = D.versions.desktop;
                 }
             }
 
             function setConfigurationForDesktop_SmallResolution() {
-                if (parameter === 'smallDesktopSize') {
-                    browser.driver.manage().window().setSize(D.selectedWindowSize.smallDesktopSize.width, D.selectedWindowSize.smallDesktopSize.height);
-                    D.selectedVersion = D.versions.desktop_small;
+                if (parameter === 'tablet version') {
+                    browser.driver.manage().window().setSize(D.screenResolution.tabletSize.width, D.screenResolution.tabletSize.height);
+                    D.selectedVersion = D.versions.tablet;
                 }
             }
 
@@ -79,14 +89,14 @@ exports.config = {
         defaultTimeoutInterval: 30000
     },
 
-    plugins: [{
-        package: 'protractor-screenshoter-plugin',
-        screenshotPath: './report-with-screenshots',
-        screenshotOnExpect: 'failure+success',
-        screenshotOnSpec: 'none',
-        withLogs: 'true',
-        writeReportFreq: 'asap',
-        imageToAscii: 'none',
-        clearFoldersBeforeTest: true
-    }],
+     plugins: [{
+     package: 'protractor-screenshoter-plugin',
+     screenshotPath: './report-with-screenshots',
+     screenshotOnExpect: 'failure+success',
+     screenshotOnSpec: 'none',
+     withLogs: 'false',
+     writeReportFreq: 'asap',
+     imageToAscii: 'none',
+     clearFoldersBeforeTest: true
+     }],
 };

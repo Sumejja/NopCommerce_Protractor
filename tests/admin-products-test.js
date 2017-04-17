@@ -3,7 +3,7 @@ var createProduct = require('../pages/admin-createProduct-page.js');
 var loginPage     = require('../pages/login-page.js');
 var D             = require('../data-provider/configuration-data.js');
 
-fdescribe( D.selectedVersion +  ' / ADMIN --> Products', function () {
+describe( D.selectedVersion +  ' / ADMIN --> Products', function () {
 
     beforeAll (function() {
         loginPage.log_in_as_admin();
@@ -21,5 +21,6 @@ fdescribe( D.selectedVersion +  ' / ADMIN --> Products', function () {
             .click_Save_and_Continue_Edit()
             .select_Pictures_tab()
             .upload_file();
+
     })
 });

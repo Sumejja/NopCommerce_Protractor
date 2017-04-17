@@ -1,31 +1,33 @@
 var randomNo = Math.floor(1000000000 * Math.random() + 1).toString();
 
 exports.randomProductName    = 'product name' + randomNo;
-exports.selectedVersion      = '';
-exports.selectedWindowSize      = {
+exports.selectedVersion    = '';
+exports.selectedBrowser    = '';
+exports.screenResolution = {
     mobileSize: {
         width: 300,
         height: 730,
     },
-    bigDesktopSize:{
+    desktopSize: {
         width: 1100,
         height: 750,
     },
-    smallDesktopSize:{
-        width: 700,
-        height: 730,
-    },
+    tabletSize: {
+        width: 1010,
+        height: 660,
+    }
 };
-exports.versions             = {
+exports.versions           = {
     mobile: 'Mobile',
-    desktop_small: 'Desktop_small',
-    desktop_big: 'Desktop_big'
+    tablet: 'Tablet',
+    desktop: 'Desktop'
 };
+
 exports.admin_tabs_basicMode = [
     'Product info',
     'Pictures',
     'Product attributes',
-    'Specification attributes',
+    'Specification attributes'
 ];
 
 exports.sortingOptions = {
@@ -62,14 +64,150 @@ exports.valuesSortedByPrice_High_to_Low = [
     '$1,500.00'
 ];
 
-
-exports.isDesktop_BigSize = function() {
-    return exports.selectedVersion === exports.versions.desktop_big;
+exports.isTablet = function() {
+    return exports.selectedVersion === exports.versions.tablet;
 };
-exports.isDesktop_SmallSize = function() {
-    return exports.selectedVersion === exports.versions.desktop_small;
+exports.isDesktop = function() {
+    return exports.selectedVersion === exports.versions.desktop;
 };
 exports.isMobile = function() {
     return exports.selectedVersion === exports.versions.mobile;
 };
+
+
+exports.successNotification_shoppingCart = 'The product has been added to your shopping cart';
+
+exports.rentFuncinalityValidation_Desktop = {
+
+    'Requires future START date': {
+        startDate: '04/01/2017',
+        endDate: '04/01/2017',
+        quantity: 5,
+        totalPrice: '$30.00',
+        notification: 'Rental start date should be the future date'
+    },
+    'Requires END date after START date': {
+        startDate: '04/28/2017',
+        endDate: '04/27/2017',
+        quantity: 5,
+        totalPrice: '$30.00',
+        notification: 'Rental start date should be less than end date'
+    },
+    'START date is missing': {
+        startDate: '',
+        endDate: '04/27/2017',
+        quantity: 5,
+        totalPrice: '$30.00',
+        notification: 'Enter rental start date'
+    },
+    'END date is missing': {
+        startDate: '04/28/2017',
+        endDate: '',
+        quantity: 5,
+        totalPrice: '$30.00',
+        notification: 'Enter rental end date'
+    },
+    'START date is not a valid date format': {
+        startDate: '27.04.2017',
+        endDate: '27.04.2017',
+        quantity: 5,
+        totalPrice: '$30.00',
+        notification: 'Enter rental start date'
+    },
+    'END date is not a valid date format': {
+        startDate: '27.04.2017',
+        endDate: '27.04.2017',
+        quantity: 5,
+        totalPrice: '$30.00',
+        notification: 'Enter rental start date'
+    },
+    'Quantity is missing': {
+        startDate: '04/19/2017',
+        endDate: '04/22/2017',
+        quantity: '',
+        totalPrice: '$30.00',
+        notification: 'Quantity should be positive'
+    },
+    'Quantity is negative number': {
+        startDate: '04/19/2017',
+        endDate: '04/22/2017',
+        quantity: '-5',
+        totalPrice: '$30.00',
+        notification: 'Quantity should be positive'
+    },
+    'Quantity is decimal number': {
+        startDate: '04/19/2017',
+        endDate: '04/22/2017',
+        quantity: '1.5',
+        totalPrice: '$30.00',
+        notification: 'Quantity should be positive'
+    },
+    'Valid entries': {
+        startDate: '04/19/2017',
+        endDate: '04/22/2017',
+        quantity: 5,
+        totalPrice: '$30.00',  // --> App has a bug here- doesn't update total price if we enter date manually- without date picker
+        notification: 'The product has been added to your shopping cart'
+    },
+},
+
+    exports.rentFuncinalityValidation_Mob = {
+
+        'Requires future START date': {
+            startDateNumber: '1',
+            endDateNumber: '1',
+            quantity: 5,
+            totalPrice: '$30.00',
+            notification: 'Rental start date should be the future date'
+        },
+        'Requires END date after START date': {
+            startDateNumber: '28',
+            endDateNumber: '27',
+            quantity: 5,
+            totalPrice: '$30.00',
+            notification: 'Rental start date should be less than end date'
+        },
+        'START date is missing': {
+            startDateNumber: '',
+            endDateNumber: '27',
+            quantity: 5,
+            totalPrice: '$30.00',
+            notification: 'Enter rental start date'
+        },
+        'END date is missing': {
+            startDateNumber: '28',
+            endDateNumber: '',
+            quantity: 5,
+            totalPrice: '$30.00',
+            notification: 'Enter rental end date'
+        },
+        'Quantity is missing': {
+            startDateNumber: '19',
+            endDateNumber: '22',
+            quantity: '',
+            totalPrice: '$90.00',
+            notification: 'Quantity should be positive'
+        },
+        'Quantity is negative number': {
+            startDateNumber: '19',
+            endDateNumber: '22',
+            quantity: '-5',
+            totalPrice: '$90.00',
+            notification: 'Quantity should be positive'
+        },
+        'Quantity is decimal number': {
+            startDateNumber: '19',
+            endDateNumber: '22',
+            quantity: '1.5',
+            totalPrice: '$90.00',
+            notification: 'Quantity should be positive'
+        },
+        'Valid entries': {
+            startDateNumber: '19',
+            endDateNumber: '22',
+            quantity: 5,
+            totalPrice: '$90.00',
+            notification: 'The product has been added to your shopping cart'
+        },
+    };
 module.exports = exports;

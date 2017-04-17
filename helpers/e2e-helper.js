@@ -27,6 +27,11 @@ exports.waitVisibility = function (element) {
     browser.wait(EC.visibilityOf(element), 15000);
 };
 
+exports.waitInvisibility = function (element) {
+
+    browser.wait(EC.invisibilityOf(element), 20000);
+};
+
 exports.waitAndClick = function (element) {
 
     exports.waitElementToBeClickable(element);
