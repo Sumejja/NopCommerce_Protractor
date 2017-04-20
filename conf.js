@@ -3,7 +3,7 @@ var HtmlReporter = require('protractor-jasmine2-screenshot-reporter');
 exports.config = {
 
     multiCapabilities: [
-        {
+   /*     {
             browserName: 'MicrosoftEdge',
             specs: ['./tests/jewelry-test.js',],
             params: 'desktop version'
@@ -22,11 +22,11 @@ exports.config = {
             browserName: 'chrome',
             specs: ['./tests/jewelry-test.js',],
             params: 'tablet version',
-        },
+        },*/
         {
             browserName: 'chrome',
             chromeOptions: {mobileEmulation: {deviceName: 'Google Nexus 5'}},
-            specs: ['./tests/jewelry-test.js',],
+            specs: ['./tests/registration-test.js',],
             params: 'mobile version'
         },
     ],

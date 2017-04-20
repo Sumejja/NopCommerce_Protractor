@@ -210,4 +210,54 @@ exports.rentFuncinalityValidation_Desktop = {
             notification: 'The product has been added to your shopping cart'
         },
     };
+
+exports.validValues = [
+    'FirstNameTest',
+    'LastNameTest',
+    randomNo + '@gmail.com',
+    'CompanyTest',
+    'test123!',
+    'test123!',
+    '5',
+    'January',
+    '1990'
+];
+
+exports.invalidValues1 = [
+    'FirstNameTest',
+    'LastNameTest',
+    'EmailTestgmail.com',
+    'CompanyTest',
+    'test',
+    'test1',
+    '5',
+    'January',
+    '1990'
+];
+
+exports.invalidValues2 = [
+    'FirstNameTest',
+    'LastNameTest',
+    'sumejjaslj@maestralsolutions.com',
+    'CompanyTest',
+    'test123',
+    'test123',
+    '5',
+    'January',
+    '1990'
+];
+
+exports.validationMessages_client_side = [
+    'Wrong email',
+    'The password should have at least 6 characters.',
+    'The password and confirmation password do not match.'
+];
+
+exports.validationMessages_blankForm = [
+    'First name is required',
+    'Last name is required',
+    'Email is required',
+    'Password is required',
+    'Password is required'
+];
 module.exports = exports;
